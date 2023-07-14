@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, storage, ref } from './firebase';
+import { firestore, storage, ref } from './firebase';
 import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
@@ -32,7 +32,7 @@ const ImageUpload = () => {
         const url = await getDownloadURL(storageRef);
         console.log(url);
         try {
-          const docRef = await addDoc(collection(db, "images"), {
+          const docRef = await addDoc(collection(firestore, "images"), {
             url: url,
             timestamp: serverTimestamp(),
           });
