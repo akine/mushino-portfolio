@@ -7,41 +7,46 @@ const ImageUpload = () => {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
 
-  const handleUpload = () => {
-    const storageRef = ref(storage, `images/${image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+  const handleUpload = async () => {
+    try {
+      const storageRef = ref(storage, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      error => {
-        console.log(error);
-      },
-      async () => {
-        const url = await getDownloadURL(storageRef);
-        console.log(url);
-        try {
-          const docRef = await addDoc(collection(firestore, "images"), {
-            url: url,
-            timestamp: serverTimestamp(),
-          });
-          console.log("Document written with ID: ", docRef.id);
-        } catch (error) {
-          console.error("Error adding document: ", error);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.error('Error during upload:', error);
         }
-      }
-    );
+      );
+
+      await uploadTask;
+
+      const url = await getDownloadURL(storageRef);
+      console.log('File successfully uploaded to:', url);
+
+      const docRef = await addDoc(collection(firestore, "images"), {
+        url,
+        timestamp: serverTimestamp(),
+      });
+      console.log("Document successfully written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    } finally {
+      setProgress(0);
+      setImage(null);
+    }
   };
 
   return (
