@@ -1,8 +1,8 @@
-import './App.css';
-import ImageUpload from './ImageUpload';
-import ImageList from './ImageList';
-import ImageDetail from './ImageDetail';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import "./App.css";
+import ImageUpload from "./ImageUpload";
+import ImageList from "./ImageList";
+import ImageDetail from "./ImageDetail";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function HomePage() {
   return <ImageList />;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { firestore, storage, ref } from './firebase';
-import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import React, { useState } from "react";
+import { firestore, storage, ref } from "./firebase";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const ImageUpload = () => {
   const [image, setImage] = useState(null);
@@ -27,14 +27,14 @@ const ImageUpload = () => {
           setProgress(progress);
         },
         (error) => {
-          console.error('Error during upload:', error);
+          console.error("Error during upload:", error);
         }
       );
 
       await uploadTask;
 
       const url = await getDownloadURL(storageRef);
-      console.log('File successfully uploaded to:', url);
+      console.log("File successfully uploaded to:", url);
 
       const docRef = await addDoc(collection(firestore, "images"), {
         url,
@@ -57,6 +57,6 @@ const ImageUpload = () => {
       <button onClick={handleUpload}>Upload</button>
     </div>
   );
-}
+};
 
 export default ImageUpload;

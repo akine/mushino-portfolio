@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { initializeApp } from "firebase/app";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
 // 環境変数から Firebase の設定を読み込みます
 const firebaseConfig = {
@@ -21,5 +21,5 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

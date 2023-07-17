@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { firestore } from './firebase';
-import { collection, getDocs } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
-import './ImageList.css';
+import React, { useState, useEffect } from "react";
+import { firestore } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { Link } from "react-router-dom";
+import "./ImageList.css";
 
 const ImageList = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchImages = async () => {
-      const imagesCollection = await getDocs(collection(firestore, 'images'));
+      const imagesCollection = await getDocs(collection(firestore, "images"));
       setImages(imagesCollection.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
@@ -30,6 +30,6 @@ const ImageList = () => {
       ))}
     </div>
   );
-}
+};
 
 export default ImageList;
