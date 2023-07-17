@@ -5,12 +5,11 @@ import ImageDetail from './ImageDetail';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function HomePage() {
-  return (
-    <>
-      <ImageUpload />
-      <ImageList />
-    </>
-  );
+  return <ImageList />;
+}
+
+function UploadPage() {
+  return <ImageUpload />;
 }
 
 function App() {
@@ -19,7 +18,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/images/:id" element={<ImageDetail />} /> {/* <-- ここを修正 */}
+          <Route path="/upload" element={<UploadPage />} />
+          <Route path="/images/:id" element={<ImageDetail />} />
         </Routes>
       </div>
     </Router>
